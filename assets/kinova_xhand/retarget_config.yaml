@@ -1,0 +1,28 @@
+low_pass_alpha: 1.0
+scaling_factor: 1.4
+is_arm_based: true
+hand_name: xhand
+arm_urdf:
+  left: urdf/GEN3_URDF_V12_with_hand.urdf
+  right: urdf/GEN3_URDF_V12_with_hand_right.urdf
+arm_dof_joints:
+  left: ['L_forearm_tx_link_joint', 'L_forearm_ty_link_joint', 'L_forearm_tz_link_joint', 'L_forearm_roll_link_joint', 'L_forearm_pitch_link_joint', 'L_forearm_yaw_link_joint']
+  right: ['R_forearm_tx_link_joint', 'R_forearm_ty_link_joint', 'R_forearm_tz_link_joint', 'R_forearm_roll_link_joint', 'R_forearm_pitch_link_joint', 'R_forearm_yaw_link_joint']
+hand_dof_joints:
+  left: ['left_hand_thumb_bend_joint', 'left_hand_thumb_rota_joint1', 'left_hand_thumb_rota_joint2', 'left_hand_index_bend_joint', 'left_hand_index_joint1', 'left_hand_index_joint2', 'left_hand_mid_joint1', 'left_hand_mid_joint2', 'left_hand_ring_joint1', 'left_hand_ring_joint2', 'left_hand_pinky_joint1', 'left_hand_pinky_joint2']
+  right: ['right_hand_thumb_bend_joint', 'right_hand_thumb_rota_joint1', 'right_hand_thumb_rota_joint2', 'right_hand_index_bend_joint', 'right_hand_index_joint1', 'right_hand_index_joint2', 'right_hand_mid_joint1', 'right_hand_mid_joint2', 'right_hand_ring_joint1', 'right_hand_ring_joint2', 'right_hand_pinky_joint1', 'right_hand_pinky_joint2']
+left:
+  urdf_path: urdf/GEN3_URDF_V12_with_hand.urdf
+  target_origin_link: "left_hand_link"
+  human_origin_idx: 0
+  target_finger_links: ["left_hand_thumb_rota_tip", "left_hand_index_rota_tip", "left_hand_mid_tip", "left_hand_ring_tip", "left_hand_pinky_tip"]
+  human_finger_idxs: [4, 8, 12, 16, 20]
+  target_joint_names: ['Actuator1', 'Actuator2', 'Actuator3', 'Actuator4', 'Actuator5', 'Actuator6', 'Actuator7', 'left_hand_thumb_bend_joint', 'left_hand_thumb_rota_joint1', 'left_hand_thumb_rota_joint2', 'left_hand_index_bend_joint', 'left_hand_index_joint1', 'left_hand_index_joint2', 'left_hand_mid_joint1', 'left_hand_mid_joint2', 'left_hand_ring_joint1', 'left_hand_ring_joint2', 'left_hand_pinky_joint1', 'left_hand_pinky_joint2']
+
+right:
+  urdf_path: urdf/GEN3_URDF_V12_with_hand_right.urdf
+  target_origin_link: "right_hand_link"
+  human_origin_idx: 0
+  target_finger_links: ["right_hand_thumb_rota_tip", "right_hand_index_rota_tip", "right_hand_mid_tip", "right_hand_ring_tip", "right_hand_pinky_tip"]
+  human_finger_idxs: [4, 8, 12, 16, 20]
+  target_joint_names: ['Actuator1', 'Actuator2', 'Actuator3', 'Actuator4', 'Actuator5', 'Actuator6', 'Actuator7', 'right_hand_thumb_bend_joint', 'right_hand_thumb_rota_joint1', 'right_hand_thumb_rota_joint2', 'right_hand_index_bend_joint', 'right_hand_index_joint1', 'right_hand_index_joint2', 'right_hand_mid_joint1', 'right_hand_mid_joint2', 'right_hand_ring_joint1', 'right_hand_ring_joint2', 'right_hand_pinky_joint1', 'right_hand_pinky_joint2']

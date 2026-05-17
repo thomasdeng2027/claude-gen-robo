@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep *)",
+      "WebFetch(domain:github.com)",
+      "Bash(python3 *)",
+      "Bash(timeout 300 python src/in_context_examples/cube_push_rotate.py)",
+      "Bash(echo \"Python exists: $?\")",
+      "Bash(/scr/jingyuny/miniconda3/envs/claude-data-gen/bin/python -c 'import isaacsim; print\\('\\\\''isaacsim OK'\\\\''\\)')",
+      "Bash(timeout 300 /scr/jingyuny/miniconda3/envs/claude-data-gen/bin/python src/in_context_examples/cube_push_rotate.py)",
+      "Bash(timeout 400 /scr/jingyuny/miniconda3/envs/claude-data-gen/bin/python src/in_context_examples/cube_push_rotate.py)",
+      "Bash(bash -c '$ISAAC_PYTHON src/in_context_examples/cube_push_rotate.py 2>&1')",
+      "Bash(tee /tmp/cube_push_rotate_run.log)",
+      "Bash(/scr/jingyuny/miniconda3/envs/claude-data-gen/bin/python src/in_context_examples/cube_push_rotate.py)",
+      "Bash(timeout 600 /home/jingyuny/isaacsim/python.sh src/in_context_examples/cube_push_rotate.py)",
+      "Bash(conda info *)",
+      "Bash(tee /tmp/cube_push_rotate_run2.log)",
+      "Bash(tee /tmp/cube_push_rotate_run3.log)",
+      "Bash(tee /tmp/cube_push_rotate_run4.log)"
+    ]
+  }
+}

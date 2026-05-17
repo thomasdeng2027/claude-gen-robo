@@ -1,0 +1,61 @@
+# Human-demo-retargeting-specific config for realkinova_wuji_hand.
+# Used ONLY by tactile_data_processor.py (offline processing of human demos).
+# Does NOT affect teleop_hub_server.py or any live retargeting code.
+#
+# Uses only 5 fingertip targets (one per finger) with the fixed hand URDF
+# (realkinova_wuji_hand_{side}.urdf, no free wrist DOFs).  The optimizer has
+# 20 finger DOFs and 5 wrist-relative fingertip constraints (vector type).
+# Because the wrist is fixed, the optimizer cannot satisfy the targets by
+# moving the palm — it must curl the fingers.
+#
+# ARCTIC human_finger_idxs for fingertips:
+#   thumb_tip  : 16
+#   index_tip  : 17
+#   middle_tip : 18
+#   ring_tip   : 19
+#   pinky_tip  : 20
+
+low_pass_alpha: 0.6
+scaling_factor: [1.15, 1.15, 1.15, 1.15, 1.20]  # thumb, index, middle, ring, pinky
+
+left:
+  urdf_path: realkinova_wuji_hand_left.urdf
+  target_origin_link: "left_hand_link"
+  human_origin_idx: 0
+  target_finger_links:
+    - "left_finger1_tip_link"
+    - "left_finger2_tip_link"
+    - "left_finger3_tip_link"
+    - "left_finger4_tip_link"
+    - "left_finger5_tip_link"
+  human_finger_idxs: [16, 17, 18, 19, 20]
+  target_joint_names: ['left_finger1_joint1', 'left_finger1_joint2', 'left_finger1_joint3', 'left_finger1_joint4', 'left_finger2_joint1', 'left_finger2_joint2', 'left_finger2_joint3', 'left_finger2_joint4', 'left_finger3_joint1', 'left_finger3_joint2', 'left_finger3_joint3', 'left_finger3_joint4', 'left_finger4_joint1', 'left_finger4_joint2', 'left_finger4_joint3', 'left_finger4_joint4', 'left_finger5_joint1', 'left_finger5_joint2', 'left_finger5_joint3', 'left_finger5_joint4']
+  wrist_body: "left_hand_link"
+  finger_mapping:
+    0: ["left_hand_link"]
+    1: ["finger1"]
+    2: ["finger2"]
+    3: ["finger3"]
+    4: ["finger4"]
+    5: ["finger5"]
+
+right:
+  urdf_path: realkinova_wuji_hand_right.urdf
+  target_origin_link: "right_hand_link"
+  human_origin_idx: 0
+  target_finger_links:
+    - "right_finger1_tip_link"
+    - "right_finger2_tip_link"
+    - "right_finger3_tip_link"
+    - "right_finger4_tip_link"
+    - "right_finger5_tip_link"
+  human_finger_idxs: [16, 17, 18, 19, 20]
+  target_joint_names: ['right_finger1_joint1', 'right_finger1_joint2', 'right_finger1_joint3', 'right_finger1_joint4', 'right_finger2_joint1', 'right_finger2_joint2', 'right_finger2_joint3', 'right_finger2_joint4', 'right_finger3_joint1', 'right_finger3_joint2', 'right_finger3_joint3', 'right_finger3_joint4', 'right_finger4_joint1', 'right_finger4_joint2', 'right_finger4_joint3', 'right_finger4_joint4', 'right_finger5_joint1', 'right_finger5_joint2', 'right_finger5_joint3', 'right_finger5_joint4']
+  wrist_body: "right_hand_link"
+  finger_mapping:
+    0: ["right_hand_link"]
+    1: ["finger1"]
+    2: ["finger2"]
+    3: ["finger3"]
+    4: ["finger4"]
+    5: ["finger5"]

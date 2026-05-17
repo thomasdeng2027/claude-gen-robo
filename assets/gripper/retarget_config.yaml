@@ -1,0 +1,19 @@
+low_pass_alpha: 1.0
+scaling_factor: 1.0
+left:
+  urdf_path: robotiq_gripper.urdf
+  target_origin_link: "robotiq_85_base_link"
+  human_origin_idx: 0
+  target_finger_links: ["robotiq_85_base_link", "right_inner_finger", "left_inner_finger"]
+  human_finger_idxs: [5, 4, 8]
+  target_joint_names: ["robotiq_tx_link_joint", "robotiq_ty_link_joint", "robotiq_tz_link_joint", "robotiq_roll_link_joint", "robotiq_pitch_link_joint", "robotiq_yaw_link_joint", "finger_joint"]
+  wrist_body: "robotiq_85_base_link"
+
+right:
+  urdf_path: robotiq_gripper.urdf
+  target_origin_link: "robotiq_85_base_link"
+  human_origin_idx: 0
+  target_finger_links: ["robotiq_85_base_link", "right_inner_finger", "left_inner_finger"]
+  human_finger_idxs: [5, 4, 8]
+  target_joint_names: ["robotiq_tx_link_joint", "robotiq_ty_link_joint", "robotiq_tz_link_joint", "robotiq_roll_link_joint", "robotiq_pitch_link_joint", "robotiq_yaw_link_joint", "finger_joint"]
+  wrist_body: "robotiq_85_base_link"
