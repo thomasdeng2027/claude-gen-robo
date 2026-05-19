@@ -24,6 +24,7 @@ os.environ.setdefault("VK_ICD_FILENAMES",            "/usr/share/vulkan/icd.d/nv
 os.environ.setdefault("DISPLAY", ":1")
 os.environ.setdefault("OMNI_STRUCTUREDLOG_ENABLED",  "0")
 os.environ.setdefault("CUROBO_KERNEL_BACKEND",       "pybind")
+os.environ.setdefault("CUDA_VISIBLE_DEVICES",        "0")  # prevent MGPU sync timeout on busy multi-GPU nodes
 
 import numpy as np
 
