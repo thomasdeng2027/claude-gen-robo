@@ -12,19 +12,18 @@ from __future__ import annotations
 import os, sys, json
 from pathlib import Path
 
-_OMNI_USER_HOME  = "/tmp/isaac_user_tdeng23"
-_WARP_CACHE_PATH = "/tmp/warp_cache_tdeng23"
+_OMNI_USER_HOME  = "/tmp/isaac_user_jingyuny"
+_WARP_CACHE_PATH = "/tmp/warp_cache_jingyuny"
 Path(_OMNI_USER_HOME).mkdir(parents=True, exist_ok=True)
 Path(_WARP_CACHE_PATH).mkdir(parents=True, exist_ok=True)
 os.environ.setdefault("OMNI_USER_HOME",              _OMNI_USER_HOME)
 os.environ.setdefault("WARP_CACHE_PATH",             _WARP_CACHE_PATH)
 os.environ.setdefault("XDG_DATA_HOME",               _OMNI_USER_HOME + "/.local/share")
 os.environ.setdefault("XDG_CACHE_HOME",              _OMNI_USER_HOME + "/.cache")
-os.environ.setdefault("VK_ICD_FILENAMES",            "/usr/share/vulkan/icd.d/nvidia_icd.json")
+os.environ.setdefault("VK_ICD_FILENAMES",            "/etc/vulkan/icd.d/nvidia_icd.json")
 os.environ.setdefault("DISPLAY", ":1")
 os.environ.setdefault("OMNI_STRUCTUREDLOG_ENABLED",  "0")
 os.environ.setdefault("CUROBO_KERNEL_BACKEND",       "pybind")
-os.environ.setdefault("CUDA_VISIBLE_DEVICES",        "0")  # prevent MGPU sync timeout on busy multi-GPU nodes
 
 import numpy as np
 
@@ -35,7 +34,7 @@ _PIPELINE_DIR = _REPO_ROOT + "/src"
 _IK_URDF_PATH = _REPO_ROOT + "/assets/realkinova_wuji_hand/realkinova_wuji_hand_right.urdf"
 _OBJ_USD_PATH = _REPO_ROOT + "/src/assets/cup/cup.usd"
 
-_CUROBO_V2_ROOT = "/home/tdeng23/projects/curobo"
+_CUROBO_V2_ROOT = "/juno/u/jingyuny/curobo"
 if _CUROBO_V2_ROOT not in sys.path:
     sys.path.insert(0, _CUROBO_V2_ROOT)
 
@@ -43,9 +42,35 @@ for _p in (_REPO_ROOT, _PIPELINE_DIR):
     if _p not in sys.path:
         sys.path.insert(0, _p)
 
+# GPU selection: pick the GPU with the most free memory, or override with ISAAC_GPU.
+# CUDA_VISIBLE_DEVICES must NOT be set — Isaac Sim uses its own device enumeration.
+def _pick_gpu() -> int:
+    if "ISAAC_GPU" in os.environ:
+        return int(os.environ["ISAAC_GPU"])
+    try:
+        import subprocess
+        out = subprocess.check_output(
+            ["nvidia-smi", "--query-gpu=memory.free", "--format=csv,noheader,nounits"],
+            text=True,
+        )
+        free = [int(x.strip()) for x in out.strip().splitlines()]
+        gpu = int(max(range(len(free)), key=lambda i: free[i]))
+        print(f"[gpu] free MiB per GPU: {free} → picking GPU {gpu}", flush=True)
+        return gpu
+    except Exception as e:
+        print(f"[gpu] nvidia-smi query failed ({e}), defaulting to GPU 0", flush=True)
+        return 0
+
+_ACTIVE_GPU = _pick_gpu()
+
 from isaacsim import SimulationApp
 print("Starting SimulationApp...", flush=True)
-simulation_app = SimulationApp({"headless": True, "renderer": "RasterizedRendering"})
+simulation_app = SimulationApp({
+    "headless": True,
+    "renderer": "RasterizedRendering",
+    "active_gpu": _ACTIVE_GPU,
+    "multi_gpu": False,
+})
 print("SimulationApp ready", flush=True)
 
 import warp_compat  # noqa: F401 — swap bundled warp 1.8.2 → pip warp 1.13 after render init
@@ -406,6 +431,7 @@ _obj_settled = np.asarray(_pos_raw, dtype=np.float64)[0]
 print(f"Object settled at: {_obj_settled.tolist()}", flush=True)
 
 print("\nImporting cuRobo v2...", flush=True)
+warp_compat.ensure()  # re-apply swap in case omni extensions re-hooked bundled warp
 import torch
 from curobo._src.motion.motion_planner_cfg import MotionPlannerCfg
 from curobo._src.state.state_joint import JointState as CuroboJointState

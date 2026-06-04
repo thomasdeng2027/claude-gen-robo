@@ -17,15 +17,15 @@ from __future__ import annotations
 import os, sys, json
 from pathlib import Path
 
-_OMNI_USER_HOME  = "/tmp/isaac_user_tdeng23"
-_WARP_CACHE_PATH = "/tmp/warp_cache_tdeng23"
+_OMNI_USER_HOME  = "/tmp/isaac_user_jingyuny"
+_WARP_CACHE_PATH = "/tmp/warp_cache_jingyuny"
 Path(_OMNI_USER_HOME).mkdir(parents=True, exist_ok=True)
 Path(_WARP_CACHE_PATH).mkdir(parents=True, exist_ok=True)
 os.environ.setdefault("OMNI_USER_HOME",              _OMNI_USER_HOME)
 os.environ.setdefault("WARP_CACHE_PATH",             _WARP_CACHE_PATH)
 os.environ.setdefault("XDG_DATA_HOME",               _OMNI_USER_HOME + "/.local/share")
 os.environ.setdefault("XDG_CACHE_HOME",              _OMNI_USER_HOME + "/.cache")
-os.environ.setdefault("VK_ICD_FILENAMES",            "/usr/share/vulkan/icd.d/nvidia_icd.json")
+os.environ.setdefault("VK_ICD_FILENAMES",            "/etc/vulkan/icd.d/nvidia_icd.json")
 os.environ.setdefault("DISPLAY", ":1")
 os.environ.setdefault("OMNI_STRUCTUREDLOG_ENABLED",  "0")
 os.environ.setdefault("CUROBO_KERNEL_BACKEND",       "pybind")
@@ -39,7 +39,7 @@ _PIPELINE_DIR = _REPO_ROOT + "/src"
 _IK_URDF_PATH = _REPO_ROOT + "/assets/realkinova_sharpa_hand/realkinova_sharpa_hand_right.urdf"
 
 # cuRobo v2 root — must be first on sys.path before SimulationApp loads warp
-_CUROBO_V2_ROOT = "/home/tdeng23/projects/curobo"
+_CUROBO_V2_ROOT = "/juno/u/jingyuny/curobo"
 if _CUROBO_V2_ROOT not in sys.path:
     sys.path.insert(0, _CUROBO_V2_ROOT)
 
@@ -364,6 +364,7 @@ _obj_settled = np.asarray(_pos_raw, dtype=np.float64)[0]
 print(f"Object settled at: {_obj_settled.tolist()}", flush=True)
 
 print("\nImporting cuRobo v2...", flush=True)
+warp_compat.ensure()  # re-apply swap in case omni extensions re-hooked bundled warp
 import torch
 from curobo._src.motion.motion_planner_cfg import MotionPlannerCfg
 from curobo._src.state.state_joint import JointState as CuroboJointState

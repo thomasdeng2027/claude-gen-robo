@@ -77,7 +77,7 @@ MODEL              = os.environ.get("ANTHROPIC_MODEL", "claude-sonnet-4-6")
 MAX_ITERATIONS     = int(os.environ.get("KPT_MAX_ITER",          "12"))
 SUBPROCESS_TIMEOUT = int(os.environ.get("KPT_SUBPROC_TIMEOUT", "1800"))
 ISAAC_PYTHON       = os.environ.get("ISAAC_PYTHON",
-                                    "/home/tdeng23/miniconda3/envs/claude-data-gen/bin/python")
+                                    "/scr/jingyuny/miniconda3/envs/claude-data-gen/bin/python")
 DEFAULT_N_ENVS     = 1024
 # How many prior (assistant, user) pairs to keep in the rolling history.
 # The initial user prompt is always kept in position 0.
@@ -100,10 +100,10 @@ def run_script(script_path: str, frames_dir: str) -> tuple[str, str, int]:
     env["OMNI_CACHE_PATH"]  = f"{_local_home}/cache"
     env["OMNI_STRUCTUREDLOG_ENABLED"] = "0"
     env["CUROBO_KERNEL_BACKEND"]      = "pybind"
-    env["VK_ICD_FILENAMES"] = "/usr/share/vulkan/icd.d/nvidia_icd.json"
+    env["VK_ICD_FILENAMES"] = "/etc/vulkan/icd.d/nvidia_icd.json"
     if "DISPLAY" not in env:
         env["DISPLAY"] = ":0"
-    _curobo_root = "/home/tdeng23/projects/curobo"
+    _curobo_root = "/juno/u/jingyuny/curobo"
     existing_pp = env.get("PYTHONPATH", "")
     extra_paths = f"{_REPO_ROOT}{os.pathsep}{_curobo_root}"
     env["PYTHONPATH"] = f"{extra_paths}{os.pathsep}{existing_pp}" if existing_pp else extra_paths
