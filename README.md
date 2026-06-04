@@ -127,4 +127,7 @@ Submit with:
 mkdir -p logs
 sbatch jobs/pipeline.sh
 sbatch jobs/debug_grasp.sh
+
+### AI Use Disclosure
+AI Usage Disclosure - Claude Sonnet used as the core code-generation engine (not just a dev tool) - Claude Code (this CLI) used for development, debugging, and refactoring the pipeline - Prompt engineering was a primary technical contribution — system prompts, boilerplate injection, and feedback prompt design were iterated manually
 ```
