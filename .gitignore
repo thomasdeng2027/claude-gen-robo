@@ -12,3 +12,6 @@ build/
 runs/
 configs_generated/
 /src/runs/
+*.pth
+*.tar.gz
+_DATA/
